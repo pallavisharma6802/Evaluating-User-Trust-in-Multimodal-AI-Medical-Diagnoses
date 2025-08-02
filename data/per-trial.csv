@@ -1,0 +1,30 @@
+﻿participant_id,input_type,model_order,diagnosis_type,shown_confidence_A,shown_confidence_B,trust_rating_A,trust_rating_B,first_response_confidence_rating,final_confidence_rating,final_trust_rating,preferred_model,trust_reasoning_text
+aish,text,"A, B",conflicting,Yes (3),Yes (4),4,4,4,3,3,B,"The models had slightly different views, but each emphasized important factors. Model A highlighted quick remedies, while Model B stressed long-term care.
+I felt both perspectives were valuable for a complete understanding, so I trusted both. But since B was more confident I chose B"
+akan,text,"B, A",consistent,Yes (5),Yes (3),5,5,5,5,3,B,"Both the models were right, one gave natural remedies and the other gave over-the-counter medicines. I am doing MS in drug development, seeing model B's response improved my trust in AI"
+akas,text,"A, B",consistent,No ,No,4,4,4,4,4,B ,Model B's response was short and it also included treatment options even when I didn't specify that in the prompt. A's response was also the same but it gave too much explanation
+anan,text,"B, A",conflicting,Yes (2),Yes (5),4,3,3,2,2,A,"Both responses provided helpful information, but they focused on different aspects.
+One response gave immediate first-aid advice, while the other covered potential complications.
+Since both seemed useful depending on the situation, I trust both models equally"
+anja,image,"B, A",consistent,No ,No ,4,5,3,4,4,A,I liked how A was in detail but it was way too general and B was very good in terms of diagnosis
+arju,image,"A, B",conflicting,No ,No ,5,4,5,5,2,A,"Both the responses were similar, but I like response A because it gave remedies every possible case unlike B."
+ashu,image,"B, A",conflicting,Yes (3),Yes (4),3,4,4,3,3,B,Model B knew more medical terms and model A was basic
+jyot,text,"B, A",consistent,No ,No ,5,3,3,3,3,A,"The first response gave irrelevant historical stuff which was not necessary. However, second response was more direct"
+kath,text,"A, B",consistent,Yes (4),Yes (3),4,5,4,3,3,B,"Both responses were very consistent and reinforced the same advice. The explanations felt aligned and helped me feel more confident in the correctness of the information. Since there were no contradictions, both were good.But I choose B"
+kesa,image,"B, A",conflicting,No ,No ,3,4,4,2,2,B,"B's response was apt. I was testing if the model could detect subtle signs of an allergic skin reaction from the image without me explicitly stating the symptoms, and it did that better than A."
+likh,text,"A, B",conflicting,No ,No ,5,4,5,3,2,A,"Even though both models gave different answers, I found Model A’s reasoning more structured and aligned with what I was expecting. It gave a clear breakdown of symptoms and possible causes, which made it easier for me to trust despite the disagreement."
+madh,text,"A, B",partially consistent,No ,No,3,5,4,3,3,B,A's response was quick. 
+mano,text,"B, A",conflicting,No,No,3,2,2,1,1,A,"There were some differences between the two responses. Model A seemed more aligned with what I observed in the image I uploaded. Model B’s explanation felt slightly unrelated, so I trusted Model A more."
+moni,text,"B, A",consistent,Yes (5),Yes (4),4,5,4,5,4,B,I liked model B's response it was short and crisp
+navi,text,"A, B",conflicting,Yes (5) ,Yes (3) ,5,2,5,5,3,A,"I will choose model A over B because A's response was clear and easily understandable. B's response was just one word but still rated its own confidence as 3 out of 5, which makes me doubt its reliability for mental health-related questions."
+nira,text,"B, A",consistent,Yes (5) ,Yes (1) ,4,3,3,3,3,A,"Both the responses were almost same, however B took the extreme case that people would die of bloating, so I'd prefer A."
+prak,text,"A, B",conflicting,Yes (5),Yes (2),3,4,4,3,4,B,"The second response was more research-backed with specific details about prematurity and birth weight, which made it feel evidence-driven. I think I'll prefer this even though the confidence was lower. "
+ramm,text,"A, B",consistent,Yes (3),Yes (2),4,3,4,4,4,A,"Model A gave me a more relatable and practical answer, while the other felt too technical and less helpful in this context"
+sah,image,"B, A",partially consistent,Yes(4),Yes (3),3,4,3,3,2,A,"While both responses were generally on track, I trusted Model A more because it directly addressed the specifics of my question. "
+sasi,image,"A, B",conflicting,No,No,3,4,3,3,3,B,"Although both models interpreted the situation differently, Model B gave more specific recommendations for follow-up steps. Its detailed suggestions made me feel more confident in trusting its response."
+shar,image,"A, B",conflicting,No ,No,5,1,4,5,3,A,Its detailed suggestions made me feel more confident in trusting its response.
+soni,text,"A, B",consistent,Yes (3),Yes (4),3,4,3,3,3,A,"Both models agreed, but Model A presented the information in a more structured and easy-to-understand way. Its explanation felt more thorough, which helped me trust it slightly more than Model B."
+srir,text,"B, A",consistent,Yes (3),Yes (5),3,5,5,4,3,B,Response A used words like sternum and so on which I was not sure about  because my question was were heartburn occurs and it gave too much reasoning which I feel was unnecessary. First response was to the point.  
+swet,text,"A, B",consistent,Yes (3),Yes (2),4,3,3,4,5,A,I chose model A because it was easier to understand
+vish,image,"A, B",partially consistent,No ,No ,4,3,3,2,2,B,Model B was more convincing. Model A felt very general while B addressed it fully
+vive,text,"A, B",conflicting,No ,No ,4,4,3,2,2,B,"Both Models gave different responses. They were correct in their own terms. Model B felt trustworthy as it showed medical knowledge where A was general and basic,"

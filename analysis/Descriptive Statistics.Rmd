@@ -1,0 +1,151 @@
+---
+title: "Descriptive Statistics"
+author: "Pallavi Sharma and Bhaskar Nikhil Sunkara"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+    fig_caption: true
+---
+
+```{r setup, include=FALSE}
+# Load necessary libraries
+library(tidyverse)  # dplyr, ggplot2
+library(psych)      # describe()
+```
+
+# Data Loading
+
+```{r load-data}
+# Load the cleaned per-trial dataset
+data <- read.csv("/Users/Patron/Desktop/project/data/data_merged.csv") 
+```
+
+---
+
+# Descriptive Statistics
+
+## Participant Demographics
+
+```{r participants-demographics}
+# Age
+summary(data$age)
+sd(data$age, na.rm = TRUE)
+
+# Gender
+table(data$gender_encoded)
+prop.table(table(data$gender_encoded)) * 100
+
+# Prior AI Experience
+summary(data$prior_ai_experience)
+sd(data$prior_ai_experience, na.rm = TRUE)
+
+# Medical Background
+table(data$medical_background_flag)
+prop.table(table(data$medical_background_flag)) * 100
+
+```
+
+
+## Bias Awareness
+
+```{r bias-awareness}
+# Bias Awareness Scores
+summary(data %>% select(anchoring_bias, automation_bias, confirmation_bias))
+data %>% select(anchoring_bias, automation_bias, confirmation_bias) %>% summarise_all(sd, na.rm = TRUE)
+
+```
+
+##  Task Behavior Variables
+
+```{r task-behaviour}
+# Input Type
+table(data$input_type_encoded)
+prop.table(table(data$input_type_encoded)) * 100
+
+# Model Order
+table(data$model_order_encoded)
+prop.table(table(data$model_order_encoded)) * 100
+
+# Diagnosis Type (Consistent vs Conflicting)
+table(data$diagnosis_type_encoded)
+prop.table(table(data$diagnosis_type_encoded)) * 100
+
+# Model Preference
+table(data$preferred_model_encoded)
+prop.table(table(data$preferred_model_encoded)) * 100
+
+```
+
+
+##  Trust Ratings
+
+```{r trust-ratings}
+# Trust Ratings
+summary(data %>% select(trust_rating_A, trust_rating_B))
+data %>% select(trust_rating_A, trust_rating_B) %>% summarise_all(sd, na.rm = TRUE)
+
+# Plot Trust Rating A
+ggplot(data, aes(x = trust_rating_A)) +
+  geom_histogram(aes(y = ..density..), binwidth = 1, fill = "#69b3a2", color = "black", alpha = 0.7) +
+  geom_density(color = "#1b9e77", size = 1) +
+  geom_vline(aes(xintercept = mean(trust_rating_A, na.rm = TRUE)), 
+             color = "blue", linetype = "solid", size = 1) +
+  geom_vline(aes(xintercept = median(trust_rating_A, na.rm = TRUE)), 
+             color = "red", linetype = "dashed", size = 1) +
+  labs(title = "Distribution of Trust Ratings: Model A", 
+       x = "Trust Rating (Model A)", 
+       y = "Density") +
+  theme_minimal(base_size = 14)
+
+# Plot Trust Rating B
+ggplot(data, aes(x = trust_rating_B)) +
+  geom_histogram(aes(y = ..density..), binwidth = 1, fill = "#ffcccb", color = "black", alpha = 0.7) +
+  geom_density(color = "#d95f02", size = 1) +
+  geom_vline(aes(xintercept = mean(trust_rating_B, na.rm = TRUE)), 
+             color = "blue", linetype = "solid", size = 1) +
+  geom_vline(aes(xintercept = median(trust_rating_B, na.rm = TRUE)), 
+             color = "red", linetype = "dashed", size = 1) +
+  labs(title = "Distribution of Trust Ratings: Model B", 
+       x = "Trust Rating (Model B)", 
+       y = "Density") +
+  theme_minimal(base_size = 14)
+```
+
+##  Confidence Ratings
+
+```{r confidence-ratings}
+# Confidence Ratings
+summary(data %>% select(first_response_confidence_rating, final_confidence_rating))
+data %>% select(first_response_confidence_rating, final_confidence_rating) %>% summarise_all(sd, na.rm = TRUE)
+
+ggplot(data, aes(x = final_confidence_rating)) +
+  geom_histogram(aes(y = ..density..), binwidth = 1, fill = "#90caf9", color = "black", alpha = 0.7) +
+  geom_density(color = "#2171b5", size = 1) +
+  geom_vline(aes(xintercept = mean(final_confidence_rating, na.rm = TRUE)), 
+             color = "blue", linetype = "solid", size = 1) +
+  geom_vline(aes(xintercept = median(final_confidence_rating, na.rm = TRUE)), 
+             color = "red", linetype = "dashed", size = 1) +
+  labs(title = "Distribution of Final Confidence Ratings", 
+       x = "Final Confidence Rating", 
+       y = "Density") +
+  theme_minimal(base_size = 14)
+```
+
+## AI System Confidence (Displayed by Model)
+
+```{r ai-sys-confidence}
+# System Confidence Shown
+summary(data %>% select(shown_confidence_A_numeric, shown_confidence_B_numeric))
+data %>% select(shown_confidence_A_numeric, shown_confidence_B_numeric) %>% summarise_all(sd, na.rm = TRUE)
+```
+
+
+## Final Decision Rating
+
+```{r response-rating}
+# Response Rating
+summary(data$response_rating)
+sd(data$response_rating, na.rm = TRUE)
+```

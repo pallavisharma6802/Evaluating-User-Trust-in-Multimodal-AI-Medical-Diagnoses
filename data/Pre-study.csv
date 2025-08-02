@@ -1,0 +1,27 @@
+﻿participant_id,age,gender,education_level,field_of_study_or_occupation,prior_ai_experience,medical_knowledge_level,anchoring_bias,automation_bias,confirmation_bias
+aish,26,F,MS,Student,5,2,1,3,2
+akan,25,F,MS,Student,5,4,3,2,4
+akas,22,M,BS,SWE,5,1,1,4,1
+anan,22,F,BE,Data Analyst,5,2,2,2,3
+anja,24,F,MS,Student,5,2,3,4,3
+arju,22,M,BS,SWE,5,1,2,1,2
+ashu,28,F,MDS,Dentist,4,5,1,2,1
+jyot,48,F,BBA,HomeMaker,2,2,3,1,2
+kath,25,F,MS,Student,4,1,2,2,2
+kesa,24,M,MS,Student,4,2,2,4,3
+likh,27,F,MS,Data Analyst,3,1,4,2,4
+madh,30,F,MD,Doctor,3,5,4,1,2
+mano,24,M,MS,Student,5,1,4,3,3
+moni,20,M,BE,Student,4,1,1,3,2
+navi,22,M,BS,MLE,5,2,2,2,3
+nira,23,M,BS,Data Analyst,5,1,1,1,1
+prak,51,M,BE,Civil Engineer,3,4,4,3,3
+ramm,46,M,MS,Project Manager- CDBMS,4,5,5,3,2
+sah,18,M,BE,Student,4,1,3,3,3
+sasi,22,M,MS,Student,4,1,2,4,1
+shar,41,F,BS,HomeMaker,2,2,3,1,3
+soni,23,M,MS,Student,5,1,4,3,2
+srir,23,M,MS,Student,5,1,2,2,1
+swet,23,F,MS,Student,5,1,2,1,4
+vish,25,M,BE,Entrepreneur,4,1,3,2,3
+vive,25,M,MS,Student,3,1,2,4,4

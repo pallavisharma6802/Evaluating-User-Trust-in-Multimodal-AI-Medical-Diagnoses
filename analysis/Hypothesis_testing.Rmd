@@ -1,0 +1,167 @@
+---
+title: "Analysis"
+author: "Pallavi Sharma and Bhaskar Nikhil Sunkara"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+    fig_caption: true
+---
+
+```{r setup, include=FALSE}
+# Load necessary libraries
+library(tidyverse) 
+library(dplyr)
+library(ggpubr)    
+library(rstatix)
+library(ggplot2)
+library(interactions)
+```
+
+# Data Loading
+
+```{r load-data}
+data <- read.csv("/Users/Patron/Desktop/project/data/data_merged.csv") 
+```
+
+
+---
+# Hypothesis Testing
+
+## Hypothesis 1 (H1) Trust in BioGPT vs Gemini
+
+```{r h1-trust-test}
+data <- data %>%
+  mutate(
+    trust_biogpt = ifelse(model_order_encoded == 0, trust_rating_B, trust_rating_A),
+    trust_gemini = ifelse(model_order_encoded == 0, trust_rating_A, trust_rating_B)
+  )
+
+data %>% filter(model_order_encoded == 0) %>% select(trust_rating_A, trust_rating_B)
+
+
+# Normality tests
+shapiro.test(data$trust_biogpt)
+shapiro.test(data$trust_gemini)
+
+# Mann-Whitney U Test
+wilcox.test(data$trust_biogpt, data$trust_gemini, paired = FALSE)
+
+# Effect size calculation
+data %>%
+  mutate(group = "BioGPT_vs_Gemini") %>%
+  wilcox_effsize(trust_biogpt ~ trust_gemini, paired = FALSE)
+
+# Bar plot (Mean ± SE) with colors
+trust_data <- data.frame(
+  model = factor(c(rep("BioGPT", nrow(data)), rep("Gemini", nrow(data)))),
+  trust = c(data$trust_biogpt, data$trust_gemini)
+)
+# Updated bar plot for Trust (BioGPT vs Gemini)
+ggplot(trust_data, aes(x = model, y = trust, fill = model)) +
+  stat_summary(fun = mean, geom = "bar", width = 0.5, color = "black", alpha = 0.8) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+  scale_fill_manual(values = c("BioGPT" = "#EC8456", "Gemini" = "#4C72B0")) +
+  labs(title = "Mean Trust Ratings: BioGPT vs Gemini",
+       x = "Model",
+       y = "Trust Rating (1 - 5)") +
+  theme_minimal(base_size = 14)
+
+```
+
+
+## Hypothesis 2 (H2) — Conflict reduces Trust
+
+```{r h2-prepare-data}
+data$diagnosis_type_label <- factor(data$diagnosis_type_encoded, 
+                                    levels = c(0, 1), 
+                                    labels = c("Consistent", "Conflicting"))
+
+# Normality test
+shapiro.test(data$final_trust_rating)
+
+# Mann-Whitney U Test
+wilcox.test(final_trust_rating ~ diagnosis_type_label, data = data)
+
+# Effect size
+data %>%
+  wilcox_effsize(final_trust_rating ~ diagnosis_type_label)
+
+# Trust Rating Boxplot
+ggplot(data, aes(x = diagnosis_type_label, y = final_trust_rating, fill = diagnosis_type_label)) +
+  geom_boxplot(width = 0.5, outlier.shape = 21, outlier.fill = "white", outlier.color = "black") +
+  scale_fill_manual(values = c("Consistent" = "#EC8456", "Conflicting" = "#4C72B0")) +
+  labs(title = "Trust Ratings by Diagnosis Type",
+       x = "Diagnosis Consistency",
+       y = "Trust Rating (1-5)") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none")
+```
+
+
+## Hypothesis 3 (H3): Anchoring Bias (Chi-square Test)
+
+```{r h3-anchoring}
+table(data$model_order_encoded, data$preferred_model_encoded) # View contingency table
+
+chisq.test(table(data$model_order_encoded, data$preferred_model_encoded))
+
+# Create Proper Labels
+data$model_order_label <- factor(data$model_order_encoded, labels = c("Model A First", "Model B First"))
+data$preferred_model_label <- factor(data$preferred_model_encoded, labels = c("Preferred A", "Preferred B"))
+
+# Anchoring Bias Plot
+ggplot(data, aes(x = model_order_label, fill = preferred_model_label)) +
+  geom_bar(position = "dodge", color = "black") +
+  scale_fill_manual(values = c("Preferred A" = "#EC8456", "Preferred B" = "#4C72B0")) +
+  labs(title = "Model Order vs Preferred Model",
+       x = "Model Order (First Shown)",
+       y = "Count",
+       fill = "Preferred Model") +
+  theme_minimal(base_size = 14)
+
+```
+
+
+## Hypothesis 4 (H4): Confidence — Conflict vs Consistent (Independent-samples t-test)
+
+
+```{r h4-confidence}
+wilcox.test(final_confidence_rating ~ diagnosis_type_label, data = data)
+
+# Effect size
+data %>%
+  wilcox_effsize(final_confidence_rating ~ diagnosis_type_label)
+
+# Confidence Rating Boxplot
+ggplot(data, aes(x = diagnosis_type_label, y = final_confidence_rating, fill = diagnosis_type_label)) +
+  geom_boxplot(width = 0.5, outlier.shape = 21, outlier.fill = "white", outlier.color = "black") +
+  scale_fill_manual(values = c("Consistent" = "#EC8456", "Conflicting" = "#4C72B0")) +
+  labs(title = "Final Confidence Ratings by Diagnosis Type",
+       x = "Diagnosis Consistency",
+       y = "Confidence Rating (1 - 5)") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none")
+      
+```
+
+
+# Linear Regression
+##  to examine how prior experience, medical knowledge, or cognitive biases influence trust — and whether they moderate the relationship between model type or diagnosis consistency and trust.
+```{r regression}
+data$diagnosis_type_encoded <- as.factor(data$diagnosis_type_encoded)
+
+# Linear model with interaction
+model <- lm(final_trust_rating ~ diagnosis_type_encoded * prior_ai_experience + medical_knowledge_level,
+            data = data)
+
+summary(model)
+
+# Interaction plot
+interact_plot(model, pred = prior_ai_experience, modx = diagnosis_type_encoded,
+              plot.points = TRUE, interval = TRUE)
+
+interact_plot(model, pred = medical_knowledge_level, modx = diagnosis_type_encoded,
+              plot.points = TRUE, interval = TRUE)
+```
